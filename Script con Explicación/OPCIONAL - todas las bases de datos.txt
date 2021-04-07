@@ -1,0 +1,272 @@
+-----------------------
+---- JOHAN PALMA ------
+-----------------------
+
+
+
+
+ ---------------------
+ ------- MARIA -------
+ ---------------------
+
+BASE DE DATOS: ventas_cali  
+-----------------------------------------------------------------------------------------
+CREATE TABLE  CIUDAD
+   (	COD_CIUDAD INTEGER, 
+	NOM_CIUDAD VARCHAR(40), 
+	 CONSTRAINT CIUDAD_PK PRIMARY KEY (COD_CIUDAD) 
+   );
+
+CREATE TABLE  F_PAGO
+   (	COD_F_PAGO INTEGER, 
+	NOM_F_PAGO VARCHAR(40), 
+	 CONSTRAINT F_PAGO_PK PRIMARY KEY (COD_F_PAGO) 
+   );
+
+CREATE TABLE  VENDEDOR
+   (	COD_VENDEDOR INTEGER, 
+	NOM_VENDEDOR VARCHAR(40), 
+	 CONSTRAINT VENDEDOR_PK PRIMARY KEY (COD_VENDEDOR)
+   );
+
+CREATE TABLE  CLIENTE
+   (	COD_CLIENTE INTEGER, 
+	NOM_CLIENTE VARCHAR(40), 
+	COD_VENDEDOR INTEGER, 
+	COD_CIUDAD INTEGER, 
+	COD_F_PAGO INTEGER, 
+	 CONSTRAINT CLIENTE_PK PRIMARY KEY (COD_CLIENTE), 
+	 CONSTRAINT CLIENTE_FK1 FOREIGN KEY (COD_VENDEDOR)
+	  REFERENCES  VENDEDOR (COD_VENDEDOR), 
+	 CONSTRAINT CLIENTE_FK2 FOREIGN KEY (COD_CIUDAD)
+	  REFERENCES  CIUDAD (COD_CIUDAD), 
+	 CONSTRAINT CLIENTE_FK3 FOREIGN KEY (COD_F_PAGO)
+	  REFERENCES  F_PAGO (COD_F_PAGO) 
+   );
+
+
+CREATE TABLE  FACTURA
+   (	COD_FACTURA INTEGER, 
+	COD_CLIENTE INTEGER, 
+	VAL_FACTURA INTEGER, 
+	 CONSTRAINT FACTURA_PK PRIMARY KEY (COD_FACTURA), 
+	 CONSTRAINT FACTURA_FK1 FOREIGN KEY (COD_CLIENTE)
+	  REFERENCES  CLIENTE (COD_CLIENTE) 
+   );
+   
+   
+insert into ciudad values(1, 'Cali');
+
+insert into f_pago values(1,'Contado');
+insert into f_pago values(2,'Credito' );
+
+
+insert into vendedor values(1, 'Sandra');
+insert into vendedor values(2, 'Claudia');
+insert into vendedor values(3, 'Yamyle');
+
+insert into cliente values(1, 'Juan',2,1,1);
+insert into cliente values(2, 'Jose',1,1,2);
+insert into cliente values(3, 'Jairo',3,1,2);
+
+
+insert into factura values(1,1, 1000);
+insert into factura values(2,1, 1000);
+insert into factura values(3,2, 2000);
+insert into factura values(4,2, 2000);
+insert into factura values(5,3, 3000);
+insert into factura values(6,3, 1000);
+
+
+----------------------------------------------------------------------------------------------
+
+
+
+paso_maria
+conexion_maria
+
+-------TRAER LOS DATOS DE B.D MARIA-----------
+
+
+SELECT vendedor.cod_vendedor, nom_vendedor,
+       ciudad.cod_ciudad, nom_ciudad,
+       f_pago.cod_f_pago, nom_f_pago,
+       cliente.cod_cliente, nom_cliente,
+       factura.cod_factura, val_factura
+FROM 
+       vendedor, ciudad, f_pago, cliente, factura
+where
+       vendedor.cod_vendedor=cliente.cod_vendedor and
+       ciudad.cod_ciudad=cliente.cod_ciudad and
+       f_pago.cod_f_pago=cliente.cod_f_pago and
+       cliente.cod_cliente=factura.cod_cliente
+
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+POSTGRESQL- B.D -> ventas_medellin
+
+----------------------------------------------------------------------------------------------
+
+CREATE TABLE  CIUDAD
+   (	COD_CIUDAD INTEGER, 
+	NOM_CIUDAD VARCHAR(40), 
+	 CONSTRAINT CIUDAD_PK PRIMARY KEY (COD_CIUDAD) 
+   );
+
+CREATE TABLE  F_PAGO
+   (	COD_F_PAGO INTEGER, 
+	NOM_F_PAGO VARCHAR(40), 
+	 CONSTRAINT F_PAGO_PK PRIMARY KEY (COD_F_PAGO) 
+   );
+
+CREATE TABLE  VENDEDOR
+   (	COD_VENDEDOR INTEGER, 
+	NOM_VENDEDOR VARCHAR(40), 
+	 CONSTRAINT VENDEDOR_PK PRIMARY KEY (COD_VENDEDOR)
+   );
+
+CREATE TABLE  CLIENTE
+   (	COD_CLIENTE INTEGER, 
+	NOM_CLIENTE VARCHAR(40), 
+	COD_VENDEDOR INTEGER, 
+	COD_CIUDAD INTEGER, 
+	COD_F_PAGO INTEGER, 
+	 CONSTRAINT CLIENTE_PK PRIMARY KEY (COD_CLIENTE), 
+	 CONSTRAINT CLIENTE_FK1 FOREIGN KEY (COD_VENDEDOR)
+	  REFERENCES  VENDEDOR (COD_VENDEDOR), 
+	 CONSTRAINT CLIENTE_FK2 FOREIGN KEY (COD_CIUDAD)
+	  REFERENCES  CIUDAD (COD_CIUDAD), 
+	 CONSTRAINT CLIENTE_FK3 FOREIGN KEY (COD_F_PAGO)
+	  REFERENCES  F_PAGO (COD_F_PAGO) 
+   );
+
+
+CREATE TABLE  FACTURA
+   (	COD_FACTURA INTEGER, 
+	COD_CLIENTE INTEGER, 
+	VAL_FACTURA INTEGER, 
+	 CONSTRAINT FACTURA_PK PRIMARY KEY (COD_FACTURA), 
+	 CONSTRAINT FACTURA_FK1 FOREIGN KEY (COD_CLIENTE)
+	  REFERENCES  CLIENTE (COD_CLIENTE) 
+   );
+
+insert into ciudad values(2, 'Medellin');
+
+insert into f_pago values(1,'Contado');
+insert into f_pago values(2,'Credito' );
+
+
+insert into vendedor values(11, 'Pablo');
+insert into vendedor values(12, 'Pedro');
+insert into vendedor values(13, 'Patricia');
+
+insert into cliente values(101, 'Maria',11,2,1);
+insert into cliente values(102, 'Manuel',12,2,2);
+insert into cliente values(104, 'Marlene',12,2,2);
+insert into cliente values(103, 'Mario',13,2,2);
+
+
+insert into factura values(1001,101, 2000);
+insert into factura values(1002,102, 3000);
+insert into factura values(1003,102, 5000);
+insert into factura values(1004,104, 8000);
+insert into factura values(1005,103, 9000);
+insert into factura values(1006,103, 11000);
+
+---------------------------------------------------------------------------------------------
+
+paso_postgresql
+conexion_postgresql
+
+-------TRAER LOS DATOS DE B.D POSTGRESQL-----------
+
+
+SELECT vendedor.cod_vendedor, nom_vendedor,
+       ciudad.cod_ciudad, nom_ciudad,
+       f_pago.cod_f_pago, nom_f_pago,
+       cliente.cod_cliente, nom_cliente,
+       factura.cod_factura, val_factura
+FROM 
+       vendedor, ciudad, f_pago, cliente, factura
+where
+       vendedor.cod_vendedor=cliente.cod_vendedor and
+       ciudad.cod_ciudad=cliente.cod_ciudad and
+       f_pago.cod_f_pago=cliente.cod_f_pago and
+       cliente.cod_cliente=factura.cod_cliente
+
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+
+TRANSFORMACION > Select values
+
+ Le doy el nombre de Union
+
+Hago la Union con la b.d de Maria. Abro la SElect values y cargo los datos de esa 
+base de datos en Select & Alter y Meta data. 
+Luego en meta data selecciono para cada campo el tipo de DATO.
+Unimos la otra base de datos que es en postgresql y ejecutamos(NO HACER MÁS CONFIGURACIONES).
+
+LUEGO, HACEMOS UNA TRANSFORMACIÓN HASHSET
+Arrastramos de :
+TRANSFORMACION > Unique rows.
+La unimos con la Union por medio de una flecha.
+Damos doble click sobre esta misma(Unique rows)
+Marcamos los dos checkbox:
+y llenamos el primer campo de la PRIMERA fila con (  cod_vendedor ),
+el primer campo de la SEGUNDA fila con (  nom_vendedor  )
+
+ESTO PARA QUE SEAN LOS CAMPOS ÚNICOS.
+LE DAMOS A OK
+Y POSTERIORMENTE RUN.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+B.D MYSQL -> ventas_estrella
+
+CREATE TABLE  CIUDAD_E
+   (	COD_CIUDAD INTEGER, 
+	NOM_CIUDAD VARCHAR(40), 
+	 CONSTRAINT CIUDAD_E_PK PRIMARY KEY (COD_CIUDAD)
+   );
+
+CREATE TABLE  F_PAGO_E
+   (	COD_F_PAGO INTEGER, 
+	NOM_F_PAGO VARCHAR(40), 
+	 CONSTRAINT F_PAGO_E_PK PRIMARY KEY (COD_F_PAGO)
+   );
+
+CREATE TABLE  VENDEDOR_E 
+   (	COD_VENDEDOR INTEGER, 
+	NOM_VENDEDOR VARCHAR(40), 
+	 CONSTRAINT VENDEDOR_E_PK PRIMARY KEY (COD_VENDEDOR)
+   );
+
+CREATE TABLE  CLIENTE_E
+   (	COD_CLIENTE INTEGER, 
+	NOM_CLIENTE VARCHAR(40),  
+	 CONSTRAINT CLIENTE_E_PK PRIMARY KEY (COD_CLIENTE)
+   );
+   
+CREATE TABLE  FACTURA_E
+   (	COD_FACTURA INTEGER, 
+	COD_CLIENTE INTEGER, 
+        COD_VENDEDOR INTEGER,
+        COD_CIUDAD INTEGER,
+        COD_F_PAGO INTEGER,
+	VAL_FACTURA INTEGER, 
+	 CONSTRAINT FACTURA_EPK PRIMARY KEY (COD_FACTURA, COD_CLIENTE,COD_VENDEDOR,COD_CIUDAD,COD_F_PAGO), 
+	 CONSTRAINT FACTURA_FK1_E FOREIGN KEY (COD_CLIENTE)
+	  REFERENCES  CLIENTE_E (COD_CLIENTE),
+      CONSTRAINT FACTURA_FK2_E FOREIGN KEY (COD_CIUDAD)
+	  REFERENCES  CIUDAD_E (COD_CIUDAD),
+      CONSTRAINT FACTURA_FK3_E FOREIGN KEY (COD_VENDEDOR)
+	  REFERENCES  VENDEDOR_E (COD_VENDEDOR),
+      CONSTRAINT FACTURA_FK4_E FOREIGN KEY (COD_F_PAGO)
+	  REFERENCES  F_PAGO_E (COD_F_PAGO) 
+   )
+
+

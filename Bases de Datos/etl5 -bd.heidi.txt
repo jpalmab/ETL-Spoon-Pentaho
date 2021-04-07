@@ -1,0 +1,65 @@
+CREATE TABLE  CIUDAD
+   (	COD_CIUDAD INTEGER, 
+	NOM_CIUDAD VARCHAR(40), 
+	 CONSTRAINT CIUDAD_PK PRIMARY KEY (COD_CIUDAD) 
+   );
+
+CREATE TABLE  F_PAGO
+   (	COD_F_PAGO INTEGER, 
+	NOM_F_PAGO VARCHAR(40), 
+	 CONSTRAINT F_PAGO_PK PRIMARY KEY (COD_F_PAGO) 
+   );
+
+CREATE TABLE  VENDEDOR
+   (	COD_VENDEDOR INTEGER, 
+	NOM_VENDEDOR VARCHAR(40), 
+	 CONSTRAINT VENDEDOR_PK PRIMARY KEY (COD_VENDEDOR)
+   );
+
+CREATE TABLE  CLIENTE
+   (	COD_CLIENTE INTEGER, 
+	NOM_CLIENTE VARCHAR(40), 
+	COD_VENDEDOR INTEGER, 
+	COD_CIUDAD INTEGER, 
+	COD_F_PAGO INTEGER, 
+	 CONSTRAINT CLIENTE_PK PRIMARY KEY (COD_CLIENTE), 
+	 CONSTRAINT CLIENTE_FK1 FOREIGN KEY (COD_VENDEDOR)
+	  REFERENCES  VENDEDOR (COD_VENDEDOR), 
+	 CONSTRAINT CLIENTE_FK2 FOREIGN KEY (COD_CIUDAD)
+	  REFERENCES  CIUDAD (COD_CIUDAD), 
+	 CONSTRAINT CLIENTE_FK3 FOREIGN KEY (COD_F_PAGO)
+	  REFERENCES  F_PAGO (COD_F_PAGO) 
+   );
+
+
+CREATE TABLE  FACTURA
+   (	COD_FACTURA INTEGER, 
+	COD_CLIENTE INTEGER, 
+	VAL_FACTURA INTEGER, 
+	 CONSTRAINT FACTURA_PK PRIMARY KEY (COD_FACTURA), 
+	 CONSTRAINT FACTURA_FK1 FOREIGN KEY (COD_CLIENTE)
+	  REFERENCES  CLIENTE (COD_CLIENTE) 
+   );
+   
+   
+insert into ciudad values(1, 'Cali');
+
+insert into f_pago values(1,'Contado');
+insert into f_pago values(2,'Credito' );
+
+
+insert into vendedor values(1, 'Sandra');
+insert into vendedor values(2, 'Claudia');
+insert into vendedor values(3, 'Yamyle');
+
+insert into cliente values(1, 'Juan',2,1,1);
+insert into cliente values(2, 'Jose',1,1,2);
+insert into cliente values(3, 'Jairo',3,1,2);
+
+
+insert into factura values(1,1, 1000);
+insert into factura values(2,1, 1000);
+insert into factura values(3,2, 2000);
+insert into factura values(4,2, 2000);
+insert into factura values(5,3, 3000);
+insert into factura values(6,3, 1000);
